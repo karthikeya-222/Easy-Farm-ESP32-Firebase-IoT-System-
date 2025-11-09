@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Farming Dashboard</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+  <div id="app">
+
+    <!-- 🔐 LOGIN -->
+    <section id="login" class="login-glass">
+      <h2 class="login-title">Smart Farming Login</h2>
+      <input type="text" id="username" placeholder="Username" class="login-input" />
+
+      <div class="password-wrapper">
+        <input type="password" id="password" placeholder="Passcode" class="login-input" />
+        <i class="bi bi-eye" id="togglePassword" title="Show Password"></i>
+      </div>
+
+      <button id="loginBtn" class="login-button">Login</button>
+      <div id="error" class="error-message"></div>
+    </section>
+
+    <!-- 🟢 DASHBOARD HEADER -->
+    <section id="dashboardHeader" class="dashboard-header" style="display: none;">
+      <div class="header-left">
+        <h2 class="brand-title">🌾 Smart Farming</h2>
+        <div class="esp-status">
+          <span id="esp-status-dot" class="status-dot"></span>
+          <span id="esp-status-text">ESP32: Offline</span>
+          <div class="last-seen">Last seen: <span id="esp-lastseen">--</span></div>
+        </div>
+      </div>
+      <button id="logoutBtn" class="logout-button" onclick="logout()">Logout</button>
+    </section>
+    <!-- 📊 DASHBOARD CONTENT -->
+    <section id="dashboardContent" class="dashboard-content" style="display: none;">
+      <div class="cards">
+        <div class="card" id="moistureCard">
+          <h3>🌱 Moisture</h3>
+          <p id="moistureText">--%</p>
+        </div>
+        <div class="card" id="tempCard">
+          <h3>🌡️ Temp</h3>
+          <p id="temp">-- °C</p>
+        </div>
+        <div class="card" id="humidityCard">
+          <h3>💧 Humidity</h3>
+          <p id="hum">--%</p>
+        </div>
+        <div class="card" id="sunCard">
+          <h3>☀️ Light</h3>
+          <p id="ldr">--</p>
+        </div>
+        <div class="card" id="rainCard">
+          <h3>🌧️ Rain</h3>
+          <p id="rain">--</p>
+        </div>
+      </div>
+
+      <div class="chart-section">
+        <canvas id="sensorChart"></canvas>
+        <div class="chart-controls">
+          <select id="rangeSelect">
+            <option value="6">Last 6</option>
+            <option value="12">Last 12</option>
+            <option value="24">Last 24</option>
+          </select>
+          <button onclick="downloadChart()">Download</button>
+          <button onclick="loadChart(currentUser)">Refresh</button>
+        </div>
+      </div>
+
+      <div class="relays">
+        <div class="relay">
+          <label>Relay 1</label>
+          <label class="switch">
+            <input type="checkbox" id="relay1" onclick="toggleRelay('relay1')">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="relay">
+          <label>Relay 2</label>
+          <label class="switch">
+            <input type="checkbox" id="relay2" onclick="toggleRelay('relay2')">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+
+  </div>
+
+ <!-- Firebase + modules in correct order -->
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+<!-- Your JS Files (order matters!) -->
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="assets/js/firebase.js"></script>
+<script src="assets/js/sensors.js"></script>
+<script src="assets/js/chart.js"></script> <!-- ⬅️ loadChart() defined here -->
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/main.js"></script> <!-- ⬅️ handleSuccessfulLogin() defined here -->
+
+
+</body>
+
+</html>
